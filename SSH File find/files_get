@@ -2,7 +2,7 @@
 
 MACHINE=$1
 echo Cleaning up old files
-if [ -f output/demos/$MACHINE.zip ]; then
+if [ -f output/files_get/$MACHINE.zip ]; then
 rm output/files_get/$MACHINE.zip
 fi
 
