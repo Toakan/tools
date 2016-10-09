@@ -1,0 +1,42 @@
+#!/usr/local/bin/bash
+
+echo --------------------
+echo Grabbing Windows Data
+./for_each_ip.sh machinelist.txt "./syscreate"
+clear
+
+
+echo --------------------
+echo Windows Data transfered
+
+echo --------------------
+echo Compiling list of server information
+cd /home/tad/scripts/
+rm -rf output/machinelist.txt
+
+FILES="output/machines/*"
+for f in $FILES
+do
+        NAME=$(grep 'Host' $f)
+        Original=$(grep 'Orignal' $f)
+        OSN=$(grep 'OS Version' $f)
+        Details="$NAME, $Original, $OSN"
+    echo $Details >> output/machinelist.txt
+done
+echo Servers compiled...
+echo --------------------
+
+echo Counting Machines
+Win12=$(grep .9600 output/machinelist.txt | wc -l)
+Win08=$(grep .7601 output/machinelist.txt | wc -l)
+goog=$(grep 'Google' output/machinelist.txt | wc -l)
+
+
+
+echo -----------------------
+echo For your info...
+echo You have $Win12 Windows 2012 servers
+echo You have $Win08 Windows 2008 servers
+echo You have $goog Google servers
+echo -----------------------
+

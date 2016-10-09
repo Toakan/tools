@@ -15,7 +15,7 @@ SUFFIX=$(ssh root@$MACHINE /cygdrive/c/cygwin/bin/bash  << EOT
 EOT
 )
 
-CONVPORT='convert_hex.sh'
+CONVPORT='./convert_hex.sh'
 PRINT="$($CONVPORT $GRABHEX)"
 
 NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 12 | head -n 1)

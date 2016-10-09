@@ -1,0 +1,9 @@
+#!/usr/local/bin/bash
+
+MACHINE=$1
+ssh $1 "mkdir -p /home/"
+ssh $1 "systeminfo > /home/$1-info.txt"
+sleep 5
+rsync -av --progress $1:/home/$1-info.txt /home/output/machines/ | grep -E -v '/$'
+ssh $1 "rm /home/$1-info.txt"
+echo Next...
