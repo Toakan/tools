@@ -1,0 +1,21 @@
+#!/usr/local/bin/bash
+
+MACHINE=$1
+echo Cleaning up old files
+if [ -f output/demos/$MACHINE.zip ]; then
+rm output/files_get/$MACHINE.zip
+fi
+
+ssh $MACHINE "rm /home/$MACHINE.zip"
+
+#Only use if you want a custom directory for the ZIP results.
+#ssh $MACHINE "mkdir -p /home/"
+
+echo Checking for files / zipping them
+ssh $MACHINE "find /data/ -type d -name [0-9][0-9][0-9][0-9][0-9][0-9] | zip -r /home/$MACHINE.zip -@"
+
+echo Moving them locally
+rsync -av --progress $MACHINE:/home/$MACHINE.zip output/files_get/
+
+echo Cleaning up the remote zip
+ssh $MACHINE "rm /home/files_get/$MACHINE.zip"
